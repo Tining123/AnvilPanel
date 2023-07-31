@@ -1,0 +1,26 @@
+name: AnvilPanel
+version: '${project.version}'
+main: com.tining.anvilpanel.AnvilPanel
+authors: [ Tining ]
+api-version: 1.13
+
+depend:
+commands:
+  anvilpanel: # 命令的基本名，请不要使用奇怪的字符！
+    aliases: # 别名，方便玩家使用
+      - ap
+    usage: |
+      /ap help
+      /apadmin help
+    description: Launch panel # 描述
+    permission: anvilpanel.use
+    permission-message: You need to have the permission to use this command. Please contact your server OP. # 无权限返回的消息，通常不用
+  anvilpaneladmin: # 命令的基本名，请不要使用奇怪的字符！
+    aliases: # 别名，方便玩家使用
+      - apadmin
+    usage: |
+      /ap help
+      /apadmin help
+    description: Launch admin panel # 描述
+    permission: anvilpanel.admin
+    permission-message: You need to have the permission to use this command. Please contact your server OP. # 无权限返回的消息，通常不用

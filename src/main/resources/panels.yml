@@ -1,0 +1,14 @@
+panels:
+  - name: "tpa"
+    title: "传送面板"
+    text: "请输入目标玩家"
+    command: "tp [p] [t]"
+  - name: "say"
+    title: "说话"
+    text: ""
+    command: "say [t]"
+    op: true
+#    closing: true
+#    slot1: BARRIER
+#    slot2: BARRIER
+#    slot2text: ""
