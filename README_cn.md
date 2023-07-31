@@ -1,4 +1,5 @@
 # 铁砧面板 - 自定义带传参的指令菜单
+![logo](https://raw.githubusercontent.com/Tining123/anvilpanel/master/img/logo.png)
 **铁砧面板**是一款创新的Minecraft插件，设计用于让服务器拥有者通过独特的铁砧面板界面创建可定制的、带有参数的命令菜单。该插件的主要特性是利用铁砧界面作为输入窗口，从而提供一种更为沉浸式的游戏内管理体验。
 
 ## 特性：
@@ -15,6 +16,12 @@
 #### 使用管理员命令/anvilpaneladmin 命令简写为/apadmin
 + /apadmin list - 展示所有的指令
 + /apadmin create - 创建一个指令
++ /apgroup group - 管理权限组
+
+## Example
+![craete](https://github.com/Tining123/AnvilPanel/blob/main/img/create.gif?raw=true)
+![use](https://github.com/Tining123/AnvilPanel/blob/main/img/use.gif?raw=true)
+![use](https://github.com/Tining123/AnvilPanel/blob/main/img/setting.gif?raw=true)
 
 您只需要创建指令后，通过list命令就可以配置所有您所需的内容
 
