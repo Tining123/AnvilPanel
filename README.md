@@ -23,6 +23,14 @@
 
 All you need is create command, and list GUI will provide all configurable setting.
 
+## Placeholder
++ [p] - The player name, which use the pnael.
++ [t] - Params placeholder.
++ ; - Command spliter. AnvilPanel is able to execute multiple command.
++ op: - If you want to execute a command execute by console, start with this.
+
+#### Like this: tp [p] [t]; op: say "I am here"
+
 ## Example
 ![craete](https://github.com/Tining123/AnvilPanel/blob/main/img/create.gif?raw=true)
 ![use](https://github.com/Tining123/AnvilPanel/blob/main/img/use.gif?raw=true)

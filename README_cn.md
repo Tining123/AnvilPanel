@@ -20,6 +20,16 @@
 + /apadmin create - 创建一个指令
 + /apgroup group - 管理权限组
 
+创建一个命令，接下来都交给list命令的GUI即可
+
+## 占位符
++ [p] - 玩家名称
++ [t] - 参数替换符
++ ; - 分号分割。插件可以执行多个任务，用分号分割
++ op: - 如果想执行其中某一条任务，使用这个替换符在最前面
+
+#### 例如： tp [p] [t]; op: say "我来了！"
+
 ## Example
 ![craete](https://github.com/Tining123/AnvilPanel/blob/main/img/create.gif?raw=true)
 ![use](https://github.com/Tining123/AnvilPanel/blob/main/img/use.gif?raw=true)
