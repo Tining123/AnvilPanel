@@ -71,6 +71,10 @@ public class UserUseGUI extends AbstractGUI {
     public static void forgeCommand(Player player, Panel panel, List<String> param) {
         String title = MyStringUtil.getWordsAroundT(panel.getCommand(),
                 param.size() + 1);
+        String text =panel.getSubtitle().get(param.size());
+        if(StringUtils.isBlank(text)){
+            text = "";
+        }
 
         new AnvilGUI.Builder()
                 .onClick((slot, stateSnapshot) -> {
@@ -93,7 +97,7 @@ public class UserUseGUI extends AbstractGUI {
 
                 })
                 .title(title)
-                .text(panel.getSubtitle().get(param.size()))
+                .text(text)
                 .plugin(AnvilPanel.getInstance())
                 .open(player);
     }
