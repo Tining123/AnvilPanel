@@ -17,6 +17,7 @@
 #### Admins could use /anvilpaneladmin or /apadmin
 + /apadmin list - List all command panels
 + /apadmin create - Create a command panel
++ /apadmin group - group management
 
 All you need is create command, and list GUI will provide all configurable setting.
 
@@ -29,6 +30,9 @@ All you need is create command, and list GUI will provide all configurable setti
 + lang: Set language manually.
 
 ## Developing
++ GUI entrance to all function [-]
++ Custom sign for each panel [-]
++ Custom user authority for single panel [-]
 + Custom menus setting with GUI [-]
 ## About
 + MIT lisence

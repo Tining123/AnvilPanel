@@ -102,7 +102,7 @@ public class PanelReader {
 //            panel.setSlot3(map.get("slot3") != null ? (String) map.get("slot3") : "BARRIER");
 
             panel.setOath(map.get("oath") != null && Boolean.parseBoolean((String) map.get("oath")));
-            panel.setOath(map.get("free") != null && Boolean.parseBoolean((String) map.get("free")));
+            panel.setFree(map.get("free") != null && Boolean.parseBoolean((String) map.get("free")));
 
             // 处理特殊内容
             panel.setSubtitle(obj2List(map, "subtitle"));
