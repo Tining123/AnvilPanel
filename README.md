@@ -1,5 +1,7 @@
-# AnvilPanel - Custom Command Menu With Param
-![logo](https://raw.githubusercontent.com/Tining123/anvilpanel/master/img/logo.png)
+# AnvilPanel - Custom Command Menu With Param[中文Wiki](https://github.com/Tining123/AnvilPanel/blob/main/README_cn.md)
+![logo](https://raw.githubusercontent.com/Tining123/anvilpanel/master/img/logo-small.png)
+
+
 **AnvilPanel** is an Minecraft plugin designed to allow server owners to create customizable, parameterized command panel with anvil interfaces. The plugin configures everything within GUI, and no need to edit config files.
 
 ## Features:
