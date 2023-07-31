@@ -53,5 +53,5 @@ All you need is create command, and list GUI will provide all configurable setti
 + MIT lisence
 + If you have any suggestion, complain or recommend function, don't be hesitated and contact me via GitHub or spigot.
 ## Contact
-- Github: https://github.com/Tining123/DemonMarket
+- Github: https://github.com/Tining123/AnvilPanel
 - Email: tingave201@outlook.com

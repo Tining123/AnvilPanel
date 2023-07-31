@@ -54,5 +54,5 @@
 + 采用MIT协议，欢迎提建议，issue，fork或者直接下载使用
 + 如果有问题或者需求可以联系QQ 1340212468
 ## Contact
-- Github: https://github.com/Tining123/DemonMarket
+- Github: https://github.com/Tining123/AnvilPanel
 - Email: tingave201@outlook.com
