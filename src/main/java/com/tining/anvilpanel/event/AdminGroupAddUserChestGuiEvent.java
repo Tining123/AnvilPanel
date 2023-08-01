@@ -1,7 +1,6 @@
 package com.tining.anvilpanel.event;
 
-import com.tining.anvilpanel.gui.AdminGroupAddUserChestGUI;
-import com.tining.anvilpanel.gui.AdminGroupAddUserChestGUI;
+import com.tining.anvilpanel.gui.admin.group.AdminGroupAddUserChestGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -2,12 +2,13 @@ package com.tining.anvilpanel.gui;
 
 import com.tining.anvilpanel.AnvilPanel;
 import com.tining.anvilpanel.common.MyStringUtil;
+import com.tining.anvilpanel.event.storage.GroupReader;
+import com.tining.anvilpanel.event.storage.IListReader;
 import com.tining.anvilpanel.model.Group;
 import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.PlaceholderEnum;
-import com.tining.anvilpanel.storage.GroupReader;
-import com.tining.anvilpanel.storage.LangReader;
-import com.tining.anvilpanel.storage.PanelReader;
+import com.tining.anvilpanel.event.storage.LangReader;
+import com.tining.anvilpanel.event.storage.PanelReader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -39,7 +40,7 @@ public class UserUseGUI extends AbstractGUI {
     public static boolean getGui(Player player, String panelName) {
 
         // 获取panel
-        Panel panel = PanelReader.getPanel(panelName);
+        Panel panel = PanelReader.getInstance().get(panelName);
         if (Objects.isNull(panel)) {
             player.sendMessage(LangReader.get("命令不存在"));
             return false;
@@ -175,7 +176,7 @@ public class UserUseGUI extends AbstractGUI {
      */
     private static boolean avaGroup(Player player, Panel panel) {
         for (String grouName : panel.getGroup()) {
-            Group group = GroupReader.get(grouName);
+            Group group = GroupReader.getInstance().get(grouName);
             if (Objects.isNull(group)) {
                 continue;
             }

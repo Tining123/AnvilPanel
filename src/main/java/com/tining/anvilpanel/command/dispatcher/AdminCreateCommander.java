@@ -1,6 +1,6 @@
 package com.tining.anvilpanel.command.dispatcher;
 
-import com.tining.anvilpanel.gui.AdminPanelCreateGUI;
+import com.tining.anvilpanel.gui.admin.panel.AdminPanelCreateGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

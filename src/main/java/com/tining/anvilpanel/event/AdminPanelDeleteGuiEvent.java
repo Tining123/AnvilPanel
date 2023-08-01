@@ -1,6 +1,6 @@
 package com.tining.anvilpanel.event;
 
-import com.tining.anvilpanel.gui.AdminPanelDeleteGUI;
+import com.tining.anvilpanel.gui.admin.panel.AdminPanelDeleteGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

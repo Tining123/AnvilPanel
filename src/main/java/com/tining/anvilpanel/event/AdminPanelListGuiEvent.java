@@ -1,7 +1,7 @@
 package com.tining.anvilpanel.event;
 
-import com.tining.anvilpanel.gui.AdminPanelListGUI;
-import com.tining.anvilpanel.gui.AdminPanelSettingGUI;
+import com.tining.anvilpanel.gui.admin.panel.AdminPanelListGUI;
+import com.tining.anvilpanel.gui.admin.panel.AdminPanelSettingGUI;
 import com.tining.anvilpanel.model.Panel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

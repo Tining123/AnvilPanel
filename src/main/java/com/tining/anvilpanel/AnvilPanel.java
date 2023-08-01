@@ -4,8 +4,10 @@ import com.tining.anvilpanel.command.AdminCommand;
 import com.tining.anvilpanel.command.UserCommand;
 import com.tining.anvilpanel.common.Metrics;
 import com.tining.anvilpanel.event.*;
-import com.tining.anvilpanel.storage.ConfigReader;
-import com.tining.anvilpanel.storage.LangReader;
+import com.tining.anvilpanel.event.storage.ConfigReader;
+import com.tining.anvilpanel.event.storage.LangReader;
+import com.tining.anvilpanel.gui.V1.TemplateGuiEventV1;
+import com.tining.anvilpanel.gui.V1.TemplateListGuiEventV1;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -74,6 +76,8 @@ public final class AnvilPanel extends JavaPlugin {
         pm.registerEvents(new AdminPanelUserDeleteGuiEvent(), AnvilPanel.getInstance());
         pm.registerEvents(new AdminPanelAddUserChestGuiEvent(), AnvilPanel.getInstance());
         pm.registerEvents(new AdminPanelDeleteGuiEvent(), AnvilPanel.getInstance());
+        pm.registerEvents(new TemplateListGuiEventV1(), AnvilPanel.getInstance());
+        pm.registerEvents(new TemplateGuiEventV1(), AnvilPanel.getInstance());
     }
 
     public void setExecutor() {

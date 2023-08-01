@@ -1,7 +1,6 @@
 package com.tining.anvilpanel.common;
 
 import com.tining.anvilpanel.AnvilPanel;
-import com.tining.anvilpanel.gui.AdminGroupListGUI;
 import com.tining.anvilpanel.model.enums.PublicSignEnumInterface;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
 import org.apache.commons.collections.CollectionUtils;

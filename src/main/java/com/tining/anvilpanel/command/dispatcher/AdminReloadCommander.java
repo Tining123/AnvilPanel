@@ -1,6 +1,6 @@
 package com.tining.anvilpanel.command.dispatcher;
 
-import com.tining.anvilpanel.storage.ConfigReader;
+import com.tining.anvilpanel.event.storage.ConfigReader;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
