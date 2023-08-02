@@ -2,8 +2,9 @@ package com.tining.anvilpanel.gui.admin.panel;
 
 import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.model.Panel;
-import com.tining.anvilpanel.event.storage.LangReader;
-import com.tining.anvilpanel.event.storage.PanelReader;
+import com.tining.anvilpanel.model.enums.PlaceholderEnum;
+import com.tining.anvilpanel.storage.LangReader;
+import com.tining.anvilpanel.storage.PanelReader;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -104,8 +105,10 @@ public class AdminPanelListGUI {
                 signMaterial = DEFAULT_SIGN;
             }
             ItemStack sign = new ItemStack(signMaterial);
+            // 命令有可能很长，分行展示
+            String[] commands = panel.getCommand().split(PlaceholderEnum.SPLITER.getText());
             List<String> lores = new ArrayList<>();
-            lores.add(LangReader.get("命令:") + panel.getCommand());
+            lores.addAll(Arrays.asList(commands));
             PluginUtil.addLore(sign, lores);
             PluginUtil.setName(sign, LangReader.get("名称:") + panel.getName());
             list.add(sign);

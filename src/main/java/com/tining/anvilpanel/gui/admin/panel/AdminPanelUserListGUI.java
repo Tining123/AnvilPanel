@@ -3,7 +3,7 @@ package com.tining.anvilpanel.gui.admin.panel;
 import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
-import com.tining.anvilpanel.event.storage.LangReader;
+import com.tining.anvilpanel.storage.LangReader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -287,6 +287,9 @@ public class AdminPanelUserListGUI {
             public void deal(Inventory inventory, Player player) {
                 Panel panel = MENU_OPENING.get(player.getUniqueId()).panel;
                 String select = MENU_OPENING.get(player.getUniqueId()).selectItem;
+                if(StringUtils.isBlank(select)){
+                    return;
+                }
                 // 一定要注销
                 player.closeInventory();
                 unRegister(player);

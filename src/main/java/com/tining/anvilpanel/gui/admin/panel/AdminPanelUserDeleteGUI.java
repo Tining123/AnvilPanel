@@ -4,8 +4,8 @@ import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.PublicSignEnumInterface;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
-import com.tining.anvilpanel.event.storage.LangReader;
-import com.tining.anvilpanel.event.storage.PanelReader;
+import com.tining.anvilpanel.storage.LangReader;
+import com.tining.anvilpanel.storage.PanelReader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ public class AdminPanelUserDeleteGUI {
     /**
      * 收购列表名称
      */
-    public static final String GUI_NAME = "管理员用户删除面板";
+    public static final String GUI_NAME = "管理员面板用户删除面板";
 
     /**
      * 自身箱子界面
@@ -110,6 +111,7 @@ public class AdminPanelUserDeleteGUI {
             public void deal(Inventory inventory, Player player) {
                 String user = MENU_OPENING.get(player.getUniqueId()).user;
                 Panel panel = MENU_OPENING.get(player.getUniqueId()).panel;
+
                 if(CollectionUtils.isNotEmpty(panel.getUsers())){
                     panel.getUsers().remove(user);
                 }

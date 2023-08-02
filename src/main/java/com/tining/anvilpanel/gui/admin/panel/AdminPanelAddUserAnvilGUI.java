@@ -2,8 +2,8 @@ package com.tining.anvilpanel.gui.admin.panel;
 
 import com.tining.anvilpanel.AnvilPanel;
 import com.tining.anvilpanel.model.Panel;
-import com.tining.anvilpanel.event.storage.LangReader;
-import com.tining.anvilpanel.event.storage.PanelReader;
+import com.tining.anvilpanel.storage.LangReader;
+import com.tining.anvilpanel.storage.PanelReader;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;

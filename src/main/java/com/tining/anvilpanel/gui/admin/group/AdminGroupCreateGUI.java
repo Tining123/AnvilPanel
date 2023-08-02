@@ -1,10 +1,9 @@
 package com.tining.anvilpanel.gui.admin.group;
 
 import com.tining.anvilpanel.AnvilPanel;
-import com.tining.anvilpanel.event.storage.GroupReader;
-import com.tining.anvilpanel.event.storage.IListReader;
+import com.tining.anvilpanel.storage.GroupReader;
 import com.tining.anvilpanel.model.Group;
-import com.tining.anvilpanel.event.storage.LangReader;
+import com.tining.anvilpanel.storage.LangReader;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.entity.Player;
 

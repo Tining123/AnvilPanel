@@ -4,7 +4,7 @@ import com.tining.anvilpanel.command.dispatcher.AdminCreateCommander;
 import com.tining.anvilpanel.command.dispatcher.AdminGroupCommander;
 import com.tining.anvilpanel.command.dispatcher.AdminListCommander;
 import com.tining.anvilpanel.command.dispatcher.AdminReloadCommander;
-import com.tining.anvilpanel.gui.V1.TemplateListGUIV1;
+import com.tining.anvilpanel.gui.v1.TemplateListGUIV1;
 import org.bukkit.entity.Player;
 
 /**

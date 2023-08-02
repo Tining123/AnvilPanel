@@ -4,8 +4,8 @@ import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.PublicSignEnumInterface;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
-import com.tining.anvilpanel.event.storage.LangReader;
-import com.tining.anvilpanel.event.storage.PanelReader;
+import com.tining.anvilpanel.storage.LangReader;
+import com.tining.anvilpanel.storage.PanelReader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -38,7 +38,7 @@ public class AdminPanelGroupDeleteGUI {
     /**
      * 收购列表名称
      */
-    public static final String GUI_NAME = "管理员用户组用户删除面板";
+    public static final String GUI_NAME = "管理员指令用户组删除面板";
 
     /**
      * 自身箱子界面

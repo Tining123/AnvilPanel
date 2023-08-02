@@ -2,13 +2,13 @@ package com.tining.anvilpanel.gui;
 
 import com.tining.anvilpanel.AnvilPanel;
 import com.tining.anvilpanel.common.MyStringUtil;
-import com.tining.anvilpanel.event.storage.GroupReader;
-import com.tining.anvilpanel.event.storage.IListReader;
+import com.tining.anvilpanel.common.PluginUtil;
+import com.tining.anvilpanel.storage.GroupReader;
 import com.tining.anvilpanel.model.Group;
 import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.PlaceholderEnum;
-import com.tining.anvilpanel.event.storage.LangReader;
-import com.tining.anvilpanel.event.storage.PanelReader;
+import com.tining.anvilpanel.storage.LangReader;
+import com.tining.anvilpanel.storage.PanelReader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -18,18 +18,15 @@ import org.bukkit.event.inventory.InventoryType;
 import net.wesjd.anvilgui.AnvilGUI;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 一个最典型的铁砧面板
  *
  * @author tinga
  */
-public class UserUseGUI extends AbstractGUI {
-
-
-    public UserUseGUI(Player player, Panel panel) {
-        super(player, InventoryType.ANVIL, "Example Anvil");
-    }
+public class UserUseGUI{
 
     /**
      * 获取面板
@@ -37,7 +34,7 @@ public class UserUseGUI extends AbstractGUI {
      * @param player
      * @return
      */
-    public static boolean getGui(Player player, String panelName) {
+    public boolean getGui(Player player, String panelName) {
 
         // 获取panel
         Panel panel = PanelReader.getInstance().get(panelName);
@@ -53,7 +50,8 @@ public class UserUseGUI extends AbstractGUI {
             return true;
         }
 
-        if (!panel.getCommand().contains(PlaceholderEnum.PARAM_TEXT.getText())) {
+        if (!panel.getCommand().contains(PlaceholderEnum.PARAM_TEXT.getText())
+        && CollectionUtils.isEmpty(MyStringUtil.extractVarPlaceholders(panel.getCommand()))) {
             executeCommand(player, panel, new ArrayList<>());
         }
 
@@ -69,7 +67,7 @@ public class UserUseGUI extends AbstractGUI {
      * @param panel
      * @param param
      */
-    public static void forgeCommand(Player player, Panel panel, List<String> param) {
+    public void forgeCommand(Player player, Panel panel, List<String> param) {
         String title = MyStringUtil.getWordsAroundT(panel.getCommand(),
                 param.size() + 1);
         String text =panel.getSubtitle().get(param.size());
@@ -108,15 +106,13 @@ public class UserUseGUI extends AbstractGUI {
      *
      * @param player
      */
-    private static void executeCommand(Player player, Panel panel, List<String> param) {
+    private void executeCommand(Player player, Panel panel, List<String> param) {
 
         String command = panel.getCommand();
 
         command = command.replace(PlaceholderEnum.PLAYER_NAME.getText(), player.getName());
-
-        String paramRegex = PlaceholderEnum.PARAM_TEXT.getText().replace("[", "\\[")
-                .replace("]", "\\]");
-
+        // 替换懒人变量
+        String paramRegex = PlaceholderEnum.PARAM_TEXT.geRexText();
 
         for (String number : param) {
             command = command.replaceFirst(paramRegex, number);
@@ -140,6 +136,9 @@ public class UserUseGUI extends AbstractGUI {
 
     }
 
+
+
+    //--------权限区域--------//
     /**
      * 是否可以自由执行
      *
@@ -147,7 +146,7 @@ public class UserUseGUI extends AbstractGUI {
      * @param panel
      * @return
      */
-    private static boolean avaFree(Player player, Panel panel) {
+    private boolean avaFree(Player player, Panel panel) {
         return panel.isFree();
     }
 
@@ -174,7 +173,7 @@ public class UserUseGUI extends AbstractGUI {
      * @param panel
      * @return
      */
-    private static boolean avaGroup(Player player, Panel panel) {
+    private boolean avaGroup(Player player, Panel panel) {
         for (String grouName : panel.getGroup()) {
             Group group = GroupReader.getInstance().get(grouName);
             if (Objects.isNull(group)) {
@@ -197,10 +196,12 @@ public class UserUseGUI extends AbstractGUI {
      * @param panel
      * @return
      */
-    private static boolean avaUser(Player player, Panel panel) {
+    private boolean avaUser(Player player, Panel panel) {
         if (CollectionUtils.isEmpty(panel.getUsers())) {
             return false;
         }
         return panel.getUsers().contains(player.getName());
     }
+
+
 }

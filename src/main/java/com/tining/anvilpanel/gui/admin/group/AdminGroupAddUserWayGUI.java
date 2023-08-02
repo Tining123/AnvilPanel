@@ -3,7 +3,7 @@ package com.tining.anvilpanel.gui.admin.group;
 import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.model.Group;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
-import com.tining.anvilpanel.event.storage.LangReader;
+import com.tining.anvilpanel.storage.LangReader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
