@@ -4,6 +4,8 @@ import com.tining.anvilpanel.command.dispatcher.AdminCreateCommander;
 import com.tining.anvilpanel.command.dispatcher.AdminGroupCommander;
 import com.tining.anvilpanel.command.dispatcher.AdminListCommander;
 import com.tining.anvilpanel.command.dispatcher.AdminReloadCommander;
+import com.tining.anvilpanel.gui.v1.TemplateListGUIV1;
+import org.bukkit.entity.Player;
 
 /**
  * 管理员指令集集合
@@ -42,6 +44,13 @@ public enum AdminRouter {
         @Override
         public void deal(CommandPack commandPack) {
             new AdminReloadCommander().deal(commandPack);
+        }
+    },
+    TEST{
+        @Override
+        public void deal(CommandPack commandPack) {
+            new TemplateListGUIV1((Player) commandPack.getSender());
+            return;
         }
     }
 

@@ -1,7 +1,5 @@
 package com.tining.anvilpanel.storage;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tining.anvilpanel.common.BeanUtils;
 import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.ConfigFileNameEnum;
@@ -9,7 +7,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -18,7 +15,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author tinga
  */
-public class PanelReader {
+public class PanelReader extends IListReader<Panel> {
+
+    private final static PanelReader INSTANCE = new PanelReader();
+
+    public static PanelReader getInstance(){return INSTANCE;}
 
     private final static List<Panel> SAVE_LIST = new CopyOnWriteArrayList<>();
 
@@ -27,7 +28,8 @@ public class PanelReader {
      *
      * @param newPanel
      */
-    public static void addToList(Panel newPanel) {
+    @Override
+    public void addToList(Panel newPanel) {
         synchronized (SAVE_LIST) {
             for (Panel panel : SAVE_LIST) {
                 if (StringUtils.equals(panel.getName(), newPanel.getName())) {
@@ -47,7 +49,8 @@ public class PanelReader {
      *
      * @param panel
      */
-    public static void delete(Panel panel) {
+    @Override
+    public void delete(Panel panel) {
         synchronized (SAVE_LIST) {
             for (int i = 0; i < SAVE_LIST.size(); i++) {
                 if (StringUtils.equals(SAVE_LIST.get(i).getName(), panel.getName())) {
@@ -64,14 +67,16 @@ public class PanelReader {
      *
      * @return
      */
-    public static List<Panel> getForList() {
+    @Override
+    public List<Panel> getForList() {
         return SAVE_LIST;
     }
 
     /**
      * 保存并重装商店信息
      */
-    private static void saveAndReload() {
+    @Override
+    public void saveAndReload() {
         FileConfiguration config = ConfigReader.getFileConfig(ConfigFileNameEnum.PANEL_FILE_NAME.getName());
         String rootSection = ConfigFileNameEnum.PANEL_FILE_NAME.getRootSection();
         config.addDefault(rootSection, formatPanelList(SAVE_LIST));
@@ -86,14 +91,15 @@ public class PanelReader {
      *
      * @return 商店物品总价值表
      */
-    public static void reload() {
+    @Override
+    public void reload() {
         FileConfiguration config = ConfigReader.getFileConfig(ConfigFileNameEnum.PANEL_FILE_NAME.getName());
         List<Panel> panelList = new ArrayList<>();
         List<Map<?, ?>> sourceList = config.getMapList(ConfigFileNameEnum.PANEL_FILE_NAME.getRootSection());
         for (Map<?, ?> map : sourceList) {
             Panel panel = new Panel();
             panel.setName((String) map.get("name"));
-            panel.setText((String) map.get("text"));
+//            panel.setText((String) map.get("text"));
             panel.setTitle((String) map.get("title"));
             panel.setCommand((String) map.get("command"));
 //            panel.setSlot1(map.get("slot1") != null ? (String) map.get("slot1") : "BARRIER");
@@ -126,7 +132,8 @@ public class PanelReader {
      * @param index
      * @return
      */
-    public static Panel getPanel(int index) {
+    @Override
+    public Panel get(int index) {
         if (index < 0 || index >= SAVE_LIST.size()) {
             return null;
         }
@@ -139,7 +146,8 @@ public class PanelReader {
      * @param
      * @return
      */
-    public static Panel getPanel(String name) {
+    @Override
+    public Panel get(String name) {
         for (Panel panel : SAVE_LIST) {
             if (StringUtils.equals(panel.getName(), name)) {
                 return panel;
@@ -161,31 +169,6 @@ public class PanelReader {
             formatList.add(BeanUtils.convertClassToMap(panelList.get(i)));
         }
         return formatList;
-    }
-
-    /**
-     * Map<?, ?>转 string + List<String>
-     *
-     * @return
-     */
-    private static List<String> obj2List(Map<?, ?> map, String key) {
-        if (Objects.isNull(map.get(key))) {
-            return new ArrayList<>();
-        }
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {
-        }.getType();
-        List<String> value = gson.fromJson((String) map.get(key), type);
-        if(Objects.isNull(value)){
-            return new ArrayList<>();
-        }
-        List<String> result = new ArrayList<>();
-        for (Object item : value) {
-            // 在此处根据实际情况决定转换方式
-            // 如果你确定列表中的对象可以安全地转换为String，可以直接调用toString()
-            result.add(item.toString());
-        }
-        return result;
     }
 
 }

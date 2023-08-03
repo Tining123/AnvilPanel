@@ -1,7 +1,6 @@
 package com.tining.anvilpanel.storage;
 
 import com.tining.anvilpanel.AnvilPanel;
-import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.LangEnum;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

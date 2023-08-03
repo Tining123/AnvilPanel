@@ -3,6 +3,7 @@ package com.tining.anvilpanel.model;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author tinga
@@ -21,14 +22,14 @@ public class Panel {
     String title;
 
     /**
-     * 默认文本
-     */
-    String text;
-
-    /**
-     * 每个小变量的标题
+     * 懒人变量的标题
      */
     List<String> subtitle;
+
+    /**
+     * 变量
+     */
+    Map<String,String> vars;
 
     /**
      * 权限组
@@ -60,6 +61,12 @@ public class Panel {
      */
     boolean oath;
 
+
+//    /**
+//     * 默认文本
+//     */
+//    String text;
+//
 //    /**
 //     * 输入栏1
 //     */

@@ -61,8 +61,8 @@ public final class ConfigReader {
             configMap.put(configName, configuration);
         }
         // 重载面板
-        PanelReader.reload();
-        GroupReader.reload();
+        PanelReader.getInstance().reload();
+        GroupReader.getInstance().reload();
     }
 
     /**

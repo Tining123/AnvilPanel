@@ -22,6 +22,9 @@ public enum PlaceholderEnum {
      */
     SPLITER("spliter ", ";"),
 
+    /**
+     * op占位符
+     */
     OP_COMMAND("op command", "op:"),
 
     ;
@@ -53,6 +56,15 @@ public enum PlaceholderEnum {
      */
     public String getText() {
         return text;
+    }
+
+    /**
+     * text 获取适合做替换的格式
+     * @return
+     */
+    public String geRexText() {
+        return text.replace("[", "\\[")
+                .replace("]", "\\]");
     }
 
     /**

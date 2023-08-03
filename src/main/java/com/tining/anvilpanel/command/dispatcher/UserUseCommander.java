@@ -13,7 +13,7 @@ public class UserUseCommander extends AbstractCommander {
             return false;
         }
 
-        UserUseGUI.getGui((Player) sender, args[1]);
+        new UserUseGUI().getGui((Player) sender, args[1]);
         return true;
     }
 }

@@ -1,7 +1,6 @@
 package com.tining.anvilpanel.common;
 
 import com.tining.anvilpanel.AnvilPanel;
-import com.tining.anvilpanel.gui.AdminGroupListGUI;
 import com.tining.anvilpanel.model.enums.PublicSignEnumInterface;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
 import org.apache.commons.collections.CollectionUtils;
@@ -10,9 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -255,6 +256,23 @@ public class PluginUtil {
      */
     public static ItemStack getItemStackFromSaveNBTString(String info) {
         return itemStackDeserialize(decompress(info));
+    }
+
+    /**
+     * 获取用户权限组
+     * @param player
+     * @return
+     */
+    public static String getPlayerGroup(Player player) {
+        for (PermissionAttachmentInfo permissionInfo : player.getEffectivePermissions()) {
+            String permission = permissionInfo.getPermission();
+            if (permission.startsWith("group.")) {
+                // 返回去掉 "group." 前缀的权限节点部分，即权限组名
+                return permission.substring(6);
+            }
+        }
+        // 如果没有找到权限组，则返回 null
+        return null;
     }
 
 }

@@ -1,7 +1,5 @@
 package com.tining.anvilpanel.storage;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tining.anvilpanel.common.BeanUtils;
 import com.tining.anvilpanel.model.Group;
 import com.tining.anvilpanel.model.enums.ConfigFileNameEnum;
@@ -9,21 +7,24 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GroupReader {
+public class GroupReader extends IListReader<Group>{
 
-    private final static List<Group> SAVE_LIST = new CopyOnWriteArrayList<>();
+    private final static GroupReader INSTANCE = new GroupReader();
+
+    public static GroupReader getInstance(){return INSTANCE;}
+
+    private final List<Group> SAVE_LIST = new CopyOnWriteArrayList<>();
 
     /**
      * 添加到面板
      */
-    public static void addToList(Group newGroup){
+    @Override
+    public void addToList(Group newGroup){
         synchronized (SAVE_LIST) {
             for (Group group : SAVE_LIST) {
                 if (StringUtils.equals(group.getName(), newGroup.getName())) {
@@ -43,7 +44,8 @@ public class GroupReader {
      * 删除
      * @param group
      */
-    public static void delete(Group group){
+    @Override
+    public void delete(Group group){
         synchronized (SAVE_LIST) {
             for (int i = 0 ; i< SAVE_LIST.size();i++) {
                 if(StringUtils.equals(SAVE_LIST.get(i).getName(),group.getName())){
@@ -59,14 +61,16 @@ public class GroupReader {
      * 返回一个浏览用的副本
      * @return
      */
-    public static List<Group> getForList(){
+    @Override
+    public List<Group> getForList(){
         return SAVE_LIST;
     }
 
     /**
      * 保存并重装商店信息
      */
-    private static void saveAndReload(){
+    @Override
+    public void saveAndReload(){
         FileConfiguration config = ConfigReader.getFileConfig(ConfigFileNameEnum.GROUP_FILE_NAME.getName());
         String rootSection = ConfigFileNameEnum.GROUP_FILE_NAME.getRootSection();
         config.addDefault(rootSection, formatList(SAVE_LIST));
@@ -80,7 +84,8 @@ public class GroupReader {
      * 获取商店物品总价值表
      * @return 商店物品总价值表
      */
-    public static void reload() {
+    @Override
+    public void reload() {
         FileConfiguration config = ConfigReader.getFileConfig(ConfigFileNameEnum.GROUP_FILE_NAME.getName());
         List<Group> groupList = new ArrayList<>();
         List<Map<?,?>> sourceList = config.getMapList(ConfigFileNameEnum.GROUP_FILE_NAME.getRootSection());
@@ -105,7 +110,8 @@ public class GroupReader {
      * @param index
      * @return
      */
-    public static Group get(int index){
+    @Override
+    public Group get(int index){
         if(index < 0 || index >= SAVE_LIST.size()){
             return null;
         }
@@ -117,7 +123,8 @@ public class GroupReader {
      * @param
      * @return
      */
-    public static Group get(String name){
+    @Override
+    public Group get(String name){
         for (Group group : SAVE_LIST) {
             if (StringUtils.equals(group.getName(), name)) {
                 return group;
@@ -139,31 +146,5 @@ public class GroupReader {
         }
         return formatList;
     }
-
-    /**
-     * Map<?, ?>转 string + List<String>
-     *
-     * @return
-     */
-    private static List<String> obj2List(Map<?, ?> map, String key) {
-        if (Objects.isNull(map.get(key))) {
-            return new ArrayList<>();
-        }
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {
-        }.getType();
-        List<String> value = gson.fromJson((String) map.get(key), type);
-        if(Objects.isNull(value)){
-            return new ArrayList<>();
-        }
-        List<String> result = new ArrayList<>();
-        for (Object item : value) {
-            // 在此处根据实际情况决定转换方式
-            // 如果你确定列表中的对象可以安全地转换为String，可以直接调用toString()
-            result.add(item.toString());
-        }
-        return result;
-    }
-
 
 }

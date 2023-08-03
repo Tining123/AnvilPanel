@@ -46,3 +46,6 @@ lang:
   "管理员选择成员添加方式": "Add Users to the Command"
   "管理员用户删除面板": "User Delete Panel"
   "权限不足": "No Permission"
+  "管理员指令用户组删除面板": "Remove group from the panel"
+  "管理员面板添加人员方式选择": "Add user To the panel"
+  "管理员面板用户删除面板": "Delete user from the panel"
