@@ -1,6 +1,5 @@
 package com.tining.anvilpanel.common;
 
-import com.tining.anvilpanel.gui.UserUseGUI;
 import com.tining.anvilpanel.model.enums.PlaceholderEnum;
 
 import java.util.Comparator;
@@ -50,13 +49,29 @@ public class MyStringUtil {
         return "";
     }
 
+    public static String getWordsAroundV(String str, String sub, int n){
+        String[] split = str.split("\\s+");
+        int count = 0;
+        for (int i = 0; i < split.length; i++) {
+            if (split[i].equals(sub)) {
+                count++;
+                if (count == n) {
+                    String leftWord = (i > 0) ? split[i - 1] : "";
+                    String rightWord = (i < split.length - 1) ? split[i + 1] : "";
+                    return leftWord + " " + sub + " " + rightWord;
+                }
+            }
+        }
+        return "";
+    }
+
 
     /**
      * 获取变量替换符
      * @param input
      * @return
      */
-    public static Set<String> extractVarPlaceholders(String input) {
+    public static Set<String> getVarPlaceholders(String input) {
         Set<String> placeholders = new TreeSet<>(new NaturalOrderComparator());
         Matcher matcher = VAR_PATTERN.matcher(input);
 

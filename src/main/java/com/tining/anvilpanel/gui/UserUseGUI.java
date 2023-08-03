@@ -2,7 +2,6 @@ package com.tining.anvilpanel.gui;
 
 import com.tining.anvilpanel.AnvilPanel;
 import com.tining.anvilpanel.common.MyStringUtil;
-import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.storage.GroupReader;
 import com.tining.anvilpanel.model.Group;
 import com.tining.anvilpanel.model.Panel;
@@ -14,12 +13,9 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
 import net.wesjd.anvilgui.AnvilGUI;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 一个最典型的铁砧面板
@@ -51,7 +47,7 @@ public class UserUseGUI{
         }
 
         if (!panel.getCommand().contains(PlaceholderEnum.PARAM_TEXT.getText())
-        && CollectionUtils.isEmpty(MyStringUtil.extractVarPlaceholders(panel.getCommand()))) {
+        && CollectionUtils.isEmpty(MyStringUtil.getVarPlaceholders(panel.getCommand()))) {
             executeCommand(player, panel, new ArrayList<>());
         }
 
@@ -111,6 +107,9 @@ public class UserUseGUI{
         String command = panel.getCommand();
 
         command = command.replace(PlaceholderEnum.PLAYER_NAME.getText(), player.getName());
+
+        // TODO: 替换复用变量
+
         // 替换懒人变量
         String paramRegex = PlaceholderEnum.PARAM_TEXT.geRexText();
 

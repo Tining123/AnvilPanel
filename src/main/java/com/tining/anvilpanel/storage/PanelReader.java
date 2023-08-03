@@ -99,7 +99,7 @@ public class PanelReader extends IListReader<Panel> {
         for (Map<?, ?> map : sourceList) {
             Panel panel = new Panel();
             panel.setName((String) map.get("name"));
-            panel.setText((String) map.get("text"));
+//            panel.setText((String) map.get("text"));
             panel.setTitle((String) map.get("title"));
             panel.setCommand((String) map.get("command"));
 //            panel.setSlot1(map.get("slot1") != null ? (String) map.get("slot1") : "BARRIER");
