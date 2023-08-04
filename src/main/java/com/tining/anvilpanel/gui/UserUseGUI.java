@@ -8,6 +8,7 @@ import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.PlaceholderEnum;
 import com.tining.anvilpanel.storage.LangReader;
 import com.tining.anvilpanel.storage.PanelReader;
+import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -25,19 +26,47 @@ import java.util.*;
 public class UserUseGUI{
 
     /**
+     * 懒人变量完成标志
+     */
+    Boolean tDone;
+
+    /**
+     * 复用变量完成标志
+     */
+    Boolean vDone;
+
+    /**
+     * 基本信息
+     */
+    String panelName;
+    Player player;
+    Panel panel;
+
+    /**
+     * 参数收集
+     */
+    ParamCollector paramCollector;
+
+    /**
      * 获取面板
      *
      * @param player
      * @return
      */
     public boolean getGui(Player player, String panelName) {
-
+        this.player = player;
+        this.panelName = panelName;
+        this.vDone =false;
+        this.tDone = false;
         // 获取panel
         Panel panel = PanelReader.getInstance().get(panelName);
         if (Objects.isNull(panel)) {
             player.sendMessage(LangReader.get("命令不存在"));
             return false;
         }
+
+        this.panel = panel;
+        paramCollector = new ParamCollector();
 
         boolean ava = false;
         ava = avaFree(player, panel) || avaOath(player, panel) || avaGroup(player, panel) || avaUser(player, panel);
@@ -46,27 +75,85 @@ public class UserUseGUI{
             return true;
         }
 
-        if (!panel.getCommand().contains(PlaceholderEnum.PARAM_TEXT.getText())
-        && CollectionUtils.isEmpty(MyStringUtil.getVarPlaceholders(panel.getCommand()))) {
-            executeCommand(player, panel, new ArrayList<>());
-        }
+//        if (!panel.getCommand().contains(PlaceholderEnum.PARAM_TEXT.getText())
+//        && CollectionUtils.isEmpty(MyStringUtil.getVarPlaceholders(panel.getCommand()))) {
+//            executeCommand();
+//        }
 
-        forgeCommand(player, panel, new ArrayList<>());
-
+//        forgeParam(new ArrayList<>());
+        configureRoute();
         return true;
     }
 
     /**
-     * 构建语句
+     * 配置路由
+     */
+    private void configureRoute(){
+        // 复用变量环节
+        if (!vDone) {
+            Set<String> vars = panel.getVars().keySet();
+            if(!CollectionUtils.isEmpty(vars)){
+                forgeVarParam(new ArrayList<>(panel.getVars().keySet()), new TreeMap<>());
+            }
+            vDone = true;
+        }
+
+        // 懒人变量环节
+        if (!tDone && !panel.getCommand().contains(PlaceholderEnum.PARAM_TEXT.getText())) {
+            forgeLazyParam(new ArrayList<>());
+            tDone = true;
+        }
+
+
+        executeCommand();
+    }
+
+    /**
+     * 构建变量
+     * @param varsList
+     * @param varsMap
+     */
+    private void forgeVarParam(List<String> varsList, Map<String,String> varsMap){
+        String varNow = varsList.get(varsMap.size());
+        String text = panel.getVars().get(varNow);
+        String title = "§4" + text;
+        new AnvilGUI.Builder()
+                .onClick((slot, StateSnapshot) -> {
+                    if (slot != AnvilGUI.Slot.OUTPUT) {
+                        return Collections.emptyList();
+                    }
+                    varsMap.put(varNow, StateSnapshot.getText());
+                    List<AnvilGUI.ResponseAction> res = new ArrayList<>();
+                    res.add(AnvilGUI.ResponseAction.close());
+                    if(varsMap.size() < varsList.size()){
+                        res.add(AnvilGUI.ResponseAction.run(() ->
+                                forgeVarParam(varsList, varsMap)));
+                    }else{
+                        panel.setVars(varsMap);
+                        vDone = true;
+                        configureRoute();
+                    }
+
+                    // 记录名称并且打开下一个
+                    return res;
+
+                })
+                .title(title)
+                .text(LangReader.get("请为参数命名"))
+                .plugin(AnvilPanel.getInstance())
+                .open(player);
+    }
+
+    /**
+     * 构建懒人变量
      *
-     * @param player
-     * @param panel
      * @param param
      */
-    public void forgeCommand(Player player, Panel panel, List<String> param) {
-        String title = MyStringUtil.getWordsAroundT(panel.getCommand(),
-                param.size() + 1);
-        String text =panel.getSubtitle().get(param.size());
+    private void forgeLazyParam(List<String> param) {
+//        String title = MyStringUtil.getWordsAroundT(panel.getCommand(),
+//                param.size() + 1);
+        String text = panel.getSubtitle().get(param.size());
+        String title = "§4" + text;
         if(StringUtils.isBlank(text)){
             text = "";
         }
@@ -81,10 +168,12 @@ public class UserUseGUI{
                     res.add(AnvilGUI.ResponseAction.close());
                     if (param.size() < StringUtils.countMatches(panel.getCommand(), PlaceholderEnum.PARAM_TEXT.getText())) {
                         res.add(AnvilGUI.ResponseAction.run(() ->
-                                forgeCommand(player, panel, param)));
+                                forgeLazyParam(param)));
                     } else {
                         res.add(AnvilGUI.ResponseAction.run(() -> {
-                            executeCommand(player, panel, param);
+                            paramCollector.setLazyParam(param);
+                            tDone = true;
+                            configureRoute();
                         }));
                     }
                     // 记录名称并且打开下一个
@@ -100,9 +189,8 @@ public class UserUseGUI{
     /**
      * 执行命令
      *
-     * @param player
      */
-    private void executeCommand(Player player, Panel panel, List<String> param) {
+    private void executeCommand() {
 
         String command = panel.getCommand();
 
@@ -112,8 +200,7 @@ public class UserUseGUI{
 
         // 替换懒人变量
         String paramRegex = PlaceholderEnum.PARAM_TEXT.geRexText();
-
-        for (String number : param) {
+        for (String number : paramCollector.getLazyParam()) {
             command = command.replaceFirst(paramRegex, number);
         }
 
@@ -134,7 +221,6 @@ public class UserUseGUI{
         }
 
     }
-
 
 
     //--------权限区域--------//
@@ -202,5 +288,18 @@ public class UserUseGUI{
         return panel.getUsers().contains(player.getName());
     }
 
+    @Data
+    //-----参数封装包类-----//
+    public static class ParamCollector{
 
+        /**
+         * 变量表
+         */
+        Map<String,String> varParam = new TreeMap();
+
+        /**
+         * 懒人参数
+         */
+        List<String> lazyParam = new ArrayList<>();
+    }
 }

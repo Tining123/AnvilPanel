@@ -2,6 +2,7 @@ package com.tining.anvilpanel.storage;
 
 import com.tining.anvilpanel.common.BeanUtils;
 import com.tining.anvilpanel.model.Group;
+import com.tining.anvilpanel.model.Panel;
 import com.tining.anvilpanel.model.enums.ConfigFileNameEnum;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -131,6 +132,22 @@ public class GroupReader extends IListReader<Group>{
             }
         }
         return null;
+    }
+
+    @Override
+    Group deepGet(int index) {
+        Group group = get(index);
+        Group res = new Group();
+        BeanUtils.copyBean(group, res);
+        return res;
+    }
+
+    @Override
+    Group deepGet(String name) {
+        Group group = get(name);
+        Group res = new Group();
+        BeanUtils.copyBean(group, res);
+        return res;
     }
 
     /**

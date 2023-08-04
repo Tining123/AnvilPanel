@@ -17,6 +17,8 @@ public abstract class IListReader<T> {
     abstract void reload();
     abstract T get(int index);
     abstract T get(String name);
+    abstract T deepGet(int index);
+    abstract T deepGet(String name);
 
 
     /**

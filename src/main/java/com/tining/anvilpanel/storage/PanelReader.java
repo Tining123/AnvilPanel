@@ -156,6 +156,22 @@ public class PanelReader extends IListReader<Panel> {
         return null;
     }
 
+    @Override
+    Panel deepGet(int index) {
+        Panel panel = get(index);
+        Panel res = new Panel();
+        BeanUtils.copyBean(panel, res);
+        return res;
+    }
+
+    @Override
+    Panel deepGet(String name) {
+        Panel panel = get(name);
+        Panel res = new Panel();
+        BeanUtils.copyBean(panel, res);
+        return res;
+    }
+
     /**
      * 格式化面板
      *
