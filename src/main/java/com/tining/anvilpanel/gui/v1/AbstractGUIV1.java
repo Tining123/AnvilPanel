@@ -89,8 +89,18 @@ public abstract class AbstractGUIV1{
      *
      * @param player
      */
+    @Deprecated
     public static void unRegister(Player player) {
         map.remove(player,getClazzType());
+    }
+
+    /**
+     * 退出页面
+     * @param player
+     */
+    protected static void quit(Player player, Inventory inventory){
+        player.closeInventory();
+        unRegister(player);
     }
 
     /**
@@ -140,6 +150,12 @@ public abstract class AbstractGUIV1{
         inventory.setItem(signEnum.getSlot(), itemStack);
     }
 
+    /**
+     * 渲染画面
+     * @param inventory
+     * @param pageNum
+     * @param player
+     */
     protected abstract void drawPage(Inventory inventory, int pageNum, Player player);
 
     /**

@@ -49,3 +49,7 @@ lang:
   "管理员指令用户组删除面板": "Remove group from the panel"
   "管理员面板添加人员方式选择": "Add user To the panel"
   "管理员面板用户删除面板": "Delete user from the panel"
+  "选择创建方式": "Normal command or long command"
+  "如已完成请留空": "Leave it blank if it's done"
+  "通常命令": "Normal Command"
+  "长命令": "Long Command"

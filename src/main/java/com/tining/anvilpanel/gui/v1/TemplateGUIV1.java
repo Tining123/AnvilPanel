@@ -35,7 +35,8 @@ public class TemplateGUIV1 extends AbstractGUIV1{
         ADD(-1,"name"){
             @Override
             public void deal(Inventory inventory, Player player) {
-
+                player.closeInventory();
+                unRegister(player);
             }
         },
         ;

@@ -1,6 +1,9 @@
 package com.tining.anvilpanel.gui.admin.panel;
 
 import com.tining.anvilpanel.common.PluginUtil;
+import com.tining.anvilpanel.gui.admin.panel.v1.AdminPanelCreateWayGUI;
+import com.tining.anvilpanel.model.enums.PanelCreateActionEnum;
+import com.tining.anvilpanel.model.enums.PanelCreateTypeEnum;
 import com.tining.anvilpanel.storage.GroupReader;
 import com.tining.anvilpanel.model.Group;
 import com.tining.anvilpanel.model.Panel;
@@ -221,7 +224,7 @@ public class AdminPanelSettingGUI {
                 AdminPanelSettingGUI adminPanelSettingGUI = MENU_OPENING.get(player.getUniqueId());
                 Panel panel = adminPanelSettingGUI.panel;
                 inventory.clear();
-                new AdminPanelCreateGUI(player).setCommand(player, panel);
+                new AdminPanelCreateWayGUI(player,panel, PanelCreateActionEnum.RESET);
             }
         },
         SIGN(31, "设置图标") {
