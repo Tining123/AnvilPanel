@@ -191,7 +191,7 @@ public class AdminPanelAddUserChestGUI {
                 drawPage(inventory, page, player);
                 return;
             }
-        } catch (Exception ignre) {
+        } catch (Exception ignore) {
         }
     }
 

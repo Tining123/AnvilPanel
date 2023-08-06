@@ -172,6 +172,11 @@ public class PanelReader extends IListReader<Panel> {
         return res;
     }
 
+    @Override
+    Panel readFromSource(Map<?, ?> entity) {
+        return null;
+    }
+
     /**
      * 格式化面板
      *

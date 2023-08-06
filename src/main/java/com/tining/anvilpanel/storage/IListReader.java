@@ -2,6 +2,10 @@ package com.tining.anvilpanel.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tining.anvilpanel.common.BeanUtils;
+import com.tining.anvilpanel.model.Group;
+import com.tining.anvilpanel.model.enums.ConfigFileNameEnum;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,7 +23,43 @@ public abstract class IListReader<T> {
     abstract T get(String name);
     abstract T deepGet(int index);
     abstract T deepGet(String name);
+    abstract T readFromSource(Map<?,?> entity);
 
+
+    /**
+     * 全部添加到指定列表
+     * @param list
+     * @param sourceList
+     */
+    protected void addAllIntoList(List<T> list, List<Map<?,?>> sourceList){
+        for(Map<?,?> entity : sourceList){
+            T get = readFromSource(entity);
+            list.add(get);
+        }
+    }
+    /**
+     * 获取资源对象列表
+     * @param configFileNameEnum
+     * @return
+     */
+    protected List<Map<?,?>> getSourceList(ConfigFileNameEnum configFileNameEnum){
+        FileConfiguration config = ConfigReader.getConfigMap().get(configFileNameEnum.getName());
+        return config.getMapList(configFileNameEnum.getRootSection());
+    }
+
+    /**
+     * 格式化
+     * @param
+     * @return
+     */
+    protected List<Map<String,String>> formatList(List<T> list){
+        List<Map<String,String>> formatList = new ArrayList<>();
+
+        for (int i = 0 ; i < list.size();i ++){
+            formatList.add(BeanUtils.convertClassToMap(list.get(i)));
+        }
+        return formatList;
+    }
 
     /**
      * Map<?, ?>转 string + List<String>

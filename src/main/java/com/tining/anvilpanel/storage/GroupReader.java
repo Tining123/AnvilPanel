@@ -150,12 +150,18 @@ public class GroupReader extends IListReader<Group>{
         return res;
     }
 
+    @Override
+    Group readFromSource(Map<?, ?> entity) {
+        return null;
+    }
+
     /**
      * 格式化
      * @param
      * @return
      */
-    private static List<Map<String,String>> formatList(List<Group> groupList){
+    @Override
+    protected List<Map<String,String>> formatList(List<Group> groupList){
         List<Map<String,String>> formatList = new ArrayList<>();
 
         for (int i = 0 ; i < groupList.size();i ++){

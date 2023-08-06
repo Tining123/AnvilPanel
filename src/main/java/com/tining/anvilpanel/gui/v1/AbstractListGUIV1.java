@@ -4,6 +4,7 @@ import com.tining.anvilpanel.common.PluginUtil;
 import com.tining.anvilpanel.storage.LangReader;
 import com.tining.anvilpanel.model.enums.SignMaterialEnum;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -78,8 +79,7 @@ public abstract class AbstractListGUIV1<T extends DataV1> extends AbstractGUIV1{
 
         List<ItemStack> list = new ArrayList<>();
         for (T data : datalist) {
-            Material signMaterial = SignMaterialEnum.CONFIG.getMaterial();
-            ItemStack sign = new ItemStack(signMaterial);
+            ItemStack sign = getSignItemStack(data);
             PluginUtil.setName(sign, data.getName());
             list.add(sign);
         }
@@ -155,8 +155,17 @@ public abstract class AbstractListGUIV1<T extends DataV1> extends AbstractGUIV1{
                 drawPage(inventory, page, player);
                 return;
             }
-        } catch (Exception ignre) {
+        } catch (Exception ignore) {
         }
+    }
+
+    /**
+     * 获取物品材质
+     * @param item
+     * @return
+     */
+    protected ItemStack getSignItemStack(T item){
+        return new ItemStack(SignMaterialEnum.CONFIG.getMaterial());
     }
 
     /**

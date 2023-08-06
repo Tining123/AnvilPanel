@@ -181,7 +181,7 @@ public class AdminPanelUserListGUI {
                 drawPage(inventory, page, player);
                 return;
             }
-        } catch (Exception ignre) {
+        } catch (Exception ignore) {
         }
     }
 

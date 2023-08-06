@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class AbstractListGuiEventV1<T extends AbstractListGUIV1>{
     /**
@@ -19,7 +20,17 @@ public abstract class AbstractListGuiEventV1<T extends AbstractListGUIV1>{
     public void close(InventoryCloseEvent e) {
         if (e.getPlayer() instanceof Player) {
             Player player = (Player) e.getPlayer();
-            T.unRegister(player);
+            Optional<T> optionalMe = Optional.ofNullable((T) T.getMe(player));
+            if (optionalMe.isPresent()) {
+                T me = null;
+                try{
+                    me = (T)T.getMe(player);
+                }catch (Exception ignore){}
+                if(Objects.isNull(me)){
+                    return;
+                }
+                T.unRegister(player);
+            }
         }
     }
 
@@ -32,7 +43,17 @@ public abstract class AbstractListGuiEventV1<T extends AbstractListGUIV1>{
     @EventHandler
     public void close(PlayerQuitEvent e) {
         Player player = (Player) e.getPlayer();
-        T.unRegister(player);
+        Optional<T> optionalMe = Optional.ofNullable((T) T.getMe(player));
+        if (optionalMe.isPresent()) {
+            T me = null;
+            try{
+                me = (T)T.getMe(player);
+            }catch (Exception ignore){}
+            if(Objects.isNull(me)){
+                return;
+            }
+            T.unRegister(player);
+        }
     }
 
     /**
@@ -46,13 +67,22 @@ public abstract class AbstractListGuiEventV1<T extends AbstractListGUIV1>{
             Player player = (Player) e.getWhoClicked();
             // 是否应该响应
             if (T.shouldEffective(player, e.getView().getTitle())) {
-                e.setCancelled(true);
-                T me = (T)T.getMe(player);
-                SignEnumInterfaceV1 signEnum = me.findMatchedSign(e.getSlot(),me.getEnumList(player));
-                if (Objects.nonNull(signEnum)) {
-                    signEnum.deal(e.getClickedInventory(), player);
-                }else if(e.getSlot() < me.getViewSize()){
-                    me.setSelectItem(e.getClickedInventory(), e.getSlot(), player);
+                Optional<T> optionalMe = Optional.ofNullable((T) T.getMe(player));
+                if (optionalMe.isPresent()) {
+                    T me = null;
+                    try{
+                        me = (T)T.getMe(player);
+                    }catch (Exception ignore){}
+                    if(Objects.isNull(me)){
+                        return;
+                    }
+                    e.setCancelled(true);
+                    SignEnumInterfaceV1 signEnum = me.findMatchedSign(e.getSlot(),me.getEnumList(player));
+                    if (Objects.nonNull(signEnum)) {
+                        signEnum.deal(e.getClickedInventory(), player);
+                    }else if(e.getSlot() < me.getViewSize()){
+                        me.setSelectItem(e.getClickedInventory(), e.getSlot(), player);
+                    }
                 }
             }
         }
